@@ -109,36 +109,89 @@ const DreamsDashboard = React.createClass({
                 render: function () {
                     return (
                         <div className='ui centered card'>
-                             <div className='content'>
-                                 <span className='right floated edit icon'>
-                                     <i className='edit icon'></i> </span>
-                                     <span className='right floated trash icon'> <i className='trash icon'></i>
-                                 </span>
-                                 <br/>
-                            <img className="right floated small ui image" src={this.props.dreamImg}/>
-                            <div className="header">
-                                {this.props.title}
+                            <div className='content'>
+                                <span className='right floated edit icon'>
+                                    <i className='edit icon'></i> </span>
+                                    <span className='right floated trash icon'> <i className='trash icon'></i>
+                                </span>
+                                <br/>
+                                <img className="right floated small ui image" src={this.props.dreamImg}/>
+                                <div className="header">
+                                    {this.props.title}
+                                </div>
+                                <div className="meta">
+                                    {this.props.date}
+                                </div>
+                                <div className="description">
+                                    {this.props.description}
+                                </div>
                             </div>
-                            <div className="meta">
-                                {this.props.date}
-                            </div>
-                            <div className="description">
-                                {this.props.description}
+                            <div className="extra content">
+                                <div className="ui two buttons">
+                                    <div className="ui icon green inverted button"><i className="cloud upload icon"></i>  Float</div>
+                                    <div className="ui icon red inverted button"><i className="cloud download icon"></i>  Descend</div>
+                                </div>
                             </div>
                         </div>
-                        <div className="extra content">
-                            <div className="ui two buttons">
-                                <div className="ui icon green inverted button"><i className="cloud upload icon"></i></div>
-                                <div className="ui icon red inverted button"><i className="cloud download icon"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                )
-                ; },
-            });
+                    );
+                 },
+                });
+
+                // const Footer = React.createClass({
+                //     render: function(){
+                //         return (
+                //             <div className="ui inverted vertical footer segment">
+                //                 <div className="ui center aligned container">
+                //                     <div className="ui stackable inverted divided grid">
+                //                         <div className="three wide column">
+                //                             <h4 className="ui inverted header">Group 1</h4>
+                //                             <div className="ui inverted link list">
+                //                                 <a href="#" className="item">Link One</a>
+                //                                 <a href="#" className="item">Link Two</a>
+                //                                 <a href="#" className="item">Link Three</a>
+                //                                 <a href="#" className="item">Link Four</a>
+                //                             </div>
+                //                         </div>
+                //                         <div className="three wide column">
+                //                             <h4 className="ui inverted header">Group 2</h4>
+                //                             <div className="ui inverted link list">
+                //                                 <a href="#" className="item">Link One</a>
+                //                                 <a href="#" className="item">Link Two</a>
+                //                                 <a href="#" className="item">Link Three</a>
+                //                                 <a href="#" className="item">Link Four</a>
+                //                             </div>
+                //                         </div>
+                //                         <div className="three wide column">
+                //                             <h4 className="ui inverted header">Group 3</h4>
+                //                             <div className="ui inverted link list">
+                //                                 <a href="#" className="item">Link One</a>
+                //                                 <a href="#" className="item">Link Two</a>
+                //                                 <a href="#" className="item">Link Three</a>
+                //                                 <a href="#" className="item">Link Four</a>
+                //                             </div>
+                //                         </div>
+                //                         <div className="seven wide column">
+                //                             <h4 className="ui inverted header">Footer Header</h4>
+                //                             <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                //                         </div>
+                //                     </div>
+                //                     <div className="ui inverted section divider"></div>
+                //                     <img src="assets/images/logo.png" className="ui centered mini image"/>
+                //                     <div className="ui horizontal inverted small divided link list">
+                //                         <a className="item" href="#">Site Map</a>
+                //                         <a className="item" href="#">Contact Us</a>
+                //                         <a className="item" href="#">Terms and Conditions</a>
+                //                         <a className="item" href="#">Privacy Policy</a>
+                //                     </div>
+                //                 </div>
+                //             </div>
+                //         )
+                //     }
+                // })
 
 
-            ReactDOM.render(
-                <DreamsDashboard/>,
-                document.getElementById('content')
-            );
+                ReactDOM.render(
+                    <DreamsDashboard>
+                    </DreamsDashboard>,
+                    document.getElementById('content')
+                );
