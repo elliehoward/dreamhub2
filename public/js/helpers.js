@@ -1,14 +1,16 @@
 window.helpers = (function () {
-  function newTimer(attrs = {}) {
-    const timer = {
+  function newDream(attrs = {}) {
+    const dream = {
       title: attrs.title || 'Timer',
-      project: attrs.project || 'Project',
+      description: attrs.description || 'Description',
       id: uuid.v4(), // eslint-disable-line no-undef
-      elapsed: 0,
+      dreamImg: attrs.dreamImg || '',
+      date: attrs.date,
     };
 
-    return timer;
+    return dream;
   }
+
 
   function findById(array, id, cb) {
     array.forEach((el) => {
@@ -19,28 +21,6 @@ window.helpers = (function () {
     });
   }
 
-  function renderElapsedString(elapsed, runningSince) {
-    let totalElapsed = elapsed;
-    if (runningSince) {
-      totalElapsed += Date.now() - runningSince;
-    }
-    return millisecondsToHuman(totalElapsed);
-  }
-
-  function millisecondsToHuman(ms) {
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / 1000 / 60) % 60);
-    const hours = Math.floor(ms / 1000 / 60 / 60);
-
-    const humanized = [
-      pad(hours.toString(), 2),
-      pad(minutes.toString(), 2),
-      pad(seconds.toString(), 2),
-    ].join(':');
-
-    return humanized;
-  }
-
   function pad(numberString, size) {
     let padded = numberString;
     while (padded.length < size) padded = `0${padded}`;
@@ -48,9 +28,7 @@ window.helpers = (function () {
   }
 
   return {
-    millisecondsToHuman,
-    newTimer,
+    newDream,
     findById,
-    renderElapsedString,
   };
 }());
