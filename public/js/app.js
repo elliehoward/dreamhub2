@@ -24,13 +24,16 @@ const DreamsDashboard = React.createClass({
     handleEditFormSubmit: function (attrs) {
         this.updateDream(attrs);
     },
+    handleTrashClick: function (dreamId) {
+        this.deleteDream(dreamId)
+    },
     handleCreateFormSubmit: function(dream){
         this.createDream(dream);
     },
     createDream: function(dream){
-        const t = helpers.newDream(dream);
+        const d = helpers.newDream(dream);
         this.setState({
-            dreams: this.state.dreams.concat(t),
+            dreams: this.state.dreams.concat(d),
         });
     },
     updateDream: function(attrs){
@@ -50,6 +53,11 @@ const DreamsDashboard = React.createClass({
             }),
         });
     },
+    deleteDream: function (dreamId) {
+        this.setState({
+            dreams: this.state.dreams.filter(d => d.id !== dreamId),
+        });
+    },
     render: function () {
         return (
             <div className='ui three column centered grid'>
@@ -57,6 +65,7 @@ const DreamsDashboard = React.createClass({
                     <EditableDreamList
                         dreams={this.state.dreams}
                         onFormSubmit={this.handleEditFormSubmit}
+                        onTrashClick={this.handleTrashClick}
                     />
                     <ToggleableDreamForm
                         onFormSubmit={this.handleCreateFormSubmit}
@@ -79,6 +88,7 @@ const EditableDreamList = React.createClass({
                 private={dream.private}
                 dreamImg={dream.dreamImg}
                 onFormSubmit={this.props.onFormSubmit}
+                onTrashClick={this.props.onTrashClick}
             />
         ))
         return (
@@ -134,6 +144,7 @@ const EditableDreamList = React.createClass({
                         private={this.props.private}
                         dreamImg={this.props.dreamImg}
                         onEditClick={this.handleEditClick}
+                        onTrashClick={this.props.onTrashClick}
                     />
                 );
             }
@@ -234,6 +245,9 @@ const ToggleableDreamForm = React.createClass({
             })
 
 const Dream = React.createClass({
+    handleTrashClick: function () {
+      this.props.onTrashClick(this.props.id);
+  },
     render: function () {
         return (
             <div className='ui centered card'>
@@ -243,7 +257,11 @@ const Dream = React.createClass({
                         onClick={this.props.onEditClick}
                         >
                             <i className='edit icon'></i> </span>
-                            <span className='right floated trash icon'> <i className='trash icon'></i>
+                            <span
+                                className='right floated trash icon'
+                                onClick={this.handleTrashClick}
+                                >
+                                 <i className='trash icon'></i>
                         </span>
                         <br/>
                         <img className="right floated small ui image" src={this.props.dreamImg}/>
