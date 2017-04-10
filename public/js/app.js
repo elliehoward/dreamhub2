@@ -1,133 +1,122 @@
 const DreamsDashboard = React.createClass({
-    getInitialState: function(){
+    getInitialState: function () {
         return {
-            dreams: [
-                {
-                    title: 'Inside of a blackhole',
-                    id: uuid.v4(),
-                    description: 'What happens in a blackhole? what happens when you go into a blackhole in dreamland? Try it in your next lucid dream and let me know!',
-                    date: '2/25/17',
-                    private: false,
-                    editFormOpen: false,
-                    dreamImg: 'http://i.ytimg.com/vi/lt0WQ8JzLz4/maxresdefault.jpg',
-                    votes: 4,
-                    id: uuid.v4()
-                }, {
-                    title: 'Spiders were everywhere',
-                    description: 'I dreamed that my sister and I were trapped in my old house and it was filled with spiders. They would come in waves. We had to escape while the spiders were gone, and hide under tissues in my closet if the spiders came out. They would crawl over everything. I remember looking for my sister when the spiders left but I could not find her. I woke up before making it outdoors.',
-                    date: '1/12/17',
-                    private: false,
-                    editFormOpen: false,
-                    dreamImg: 'http://s-media-cache-ak0.pinimg.com/originals/76/61/c7/7661c751a1c735e42c6943b644c847f4.jpg',
-                    votes: 10,
-                    id: uuid.v4()
-                }
-            ]
+            dreams: [],
         };
     },
-    handleEditFormSubmit: function (attrs) {
-        this.updateDream(attrs);
+    componentDidMount: function () {
+        this.loadDreamsFromServer();
+        setInterval(this.loadDreamsFromServer, 5000);
     },
-    handleTrashClick: function (dreamId) {
-        this.deleteDream(dreamId)
-    },
-    handleUpvote: function (dreamId) {
-        // console.log(dreamId, 'was upvoted')
-        this.upvoteDream(dreamId)
-    },
-    handleDownvote: function (dreamId) {
-        this.downvoteDream(dreamId)
-        // console.log(dreamId, 'was downvoted')
-    },
-    handleCreateFormSubmit: function(dream){
-        this.createDream(dream);
-    },
-    createDream: function(dream){
-        const d = helpers.newDream(dream);
-        this.setState({
-            dreams: this.state.dreams.concat(d),
-        });
-    },
-    updateDream: function(attrs){
-        this.setState({
-            dreams: this.state.dreams.map((dream) => {
-                if (dream.id === attrs.id) {
-                    return Object.assign({}, dream, {
-                        title: attrs.title,
-                        description: attrs.description,
-                        id: attrs.id,
-                        dreamImg: attrs.dreamImg,
-                        date: attrs.date,
-                        votes: attrs.votes,
-                    });
-                } else {
-                    return dream;
-                }
-            }),
-        });
-    },
-    deleteDream: function (dreamId) {
-        this.setState({
-            dreams: this.state.dreams.filter(d => d.id !== dreamId),
-        });
-    },
-    upvoteDream: function (dreamId) {
-        console.log(dreamId);
-        const nextDreams = this.state.dreams.map((dream) => {
-            if (dream.id === dreamId) {
-                console.log(dream.votes);
-                return Object.assign({}, dream, {
-                    votes: dream.votes + 1,
-                });
-            } else {
-                return dream;
-            }
-        });
-        this.setState({
-            dreams: nextDreams,
-        });
-    },
-    downvoteDream: function (dreamId) {
-        console.log(dreamId);
-        const nextDreams = this.state.dreams.map((dream) => {
-            if (dream.id === dreamId) {
-                console.log(dream.votes);
-                return Object.assign({}, dream, {
-                    votes: dream.votes - 1,
-                });
-            } else {
-                return dream;
-            }
-        });
-        this.setState({
-            dreams: nextDreams,
-        });
-    },
-    render: function () {
-        return (
-            <div className='ui three column centered grid'>
-                <div className='column'>
-                    <EditableDreamList
-                        dreams={this.state.dreams}
-                        onFormSubmit={this.handleEditFormSubmit}
-                        onTrashClick={this.handleTrashClick}
-                        onUpvote={this.handleUpvote}
-                        onDownvote={this.handleDownvote}
-                    />
-                    <ToggleableDreamForm
-                        onFormSubmit={this.handleCreateFormSubmit}
-                    />
-                </div>
-            </div>
+    loadDreamsFromServer: function () {
+        client.getDreams((serverDreams) => (
+            this.setState({ dreams: serverDreams })
         )
-    }
+    );
+},
+handleEditFormSubmit: function (attrs) {
+    this.updateDream(attrs);
+},
+handleTrashClick: function (dreamId) {
+    this.deleteDream(dreamId)
+},
+handleUpvote: function (dreamId) {
+    // console.log(dreamId, 'was upvoted')
+    this.upvoteDream(dreamId)
+},
+handleDownvote: function (dreamId) {
+    this.downvoteDream(dreamId)
+    // console.log(dreamId, 'was downvoted')
+},
+handleCreateFormSubmit: function(dream){
+    this.createDream(dream);
+},
+createDream: function(dream){
+    const d = helpers.newDream(dream);
+    this.setState({
+        dreams: this.state.dreams.concat(d),
+    });
+},
+updateDream: function(attrs){
+    this.setState({
+        dreams: this.state.dreams.map((dream) => {
+            if (dream.id === attrs.id) {
+                return Object.assign({}, dream, {
+                    title: attrs.title,
+                    description: attrs.description,
+                    id: attrs.id,
+                    dreamImg: attrs.dreamImg,
+                    date: attrs.date,
+                    votes: attrs.votes,
+                });
+            } else {
+                return dream;
+            }
+        }),
+    });
+},
+deleteDream: function (dreamId) {
+    this.setState({
+        dreams: this.state.dreams.filter(d => d.id !== dreamId),
+    });
+},
+upvoteDream: function (dreamId) {
+    console.log(dreamId);
+    const nextDreams = this.state.dreams.map((dream) => {
+        if (dream.id === dreamId) {
+            console.log(dream.votes);
+            return Object.assign({}, dream, {
+                votes: dream.votes + 1,
+            });
+        } else {
+            return dream;
+        }
+    });
+    this.setState({
+        dreams: nextDreams,
+    });
+},
+downvoteDream: function (dreamId) {
+    console.log(dreamId);
+    const nextDreams = this.state.dreams.map((dream) => {
+        if (dream.id === dreamId) {
+            console.log(dream.votes);
+            return Object.assign({}, dream, {
+                votes: dream.votes - 1,
+            });
+        } else {
+            return dream;
+        }
+    });
+    this.setState({
+        dreams: nextDreams,
+    });
+},
+render: function () {
+    return (
+        <div className='ui three column centered grid'>
+            <div className='column'>
+                <EditableDreamList
+                    dreams={this.state.dreams}
+                    onFormSubmit={this.handleEditFormSubmit}
+                    onTrashClick={this.handleTrashClick}
+                    onUpvote={this.handleUpvote}
+                    onDownvote={this.handleDownvote}
+                />
+                <ToggleableDreamForm
+                    onFormSubmit={this.handleCreateFormSubmit}
+                />
+            </div>
+        </div>
+    )
+}
 });
 
 const EditableDreamList = React.createClass({
     render: function () {
         const dreamData = this.props.dreams.sort((a, b) => (
-                b.votes - a.votes
-            ))
+            b.votes - a.votes
+        ))
         const dreams = dreamData.map((dream) => (
             <EditableDream
                 title={dream.title}

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 window.client = (function () {
-  function getTimers(success) {
-    return fetch('/api/timers', {
+  function getDreams(success) {
+    return fetch('/api/dreams', {
       headers: {
         Accept: 'application/json',
       },
@@ -11,8 +11,8 @@ window.client = (function () {
       .then(success);
   }
 
-  function createTimer(data) {
-    return fetch('/api/timers', {
+  function createDream(data) {
+    return fetch('/api/dreams', {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
@@ -22,8 +22,8 @@ window.client = (function () {
     }).then(checkStatus);
   }
 
-  function updateTimer(data) {
-    return fetch('/api/timers', {
+  function updateDream(data) {
+    return fetch('/api/dreams', {
       method: 'put',
       body: JSON.stringify(data),
       headers: {
@@ -33,8 +33,8 @@ window.client = (function () {
     }).then(checkStatus);
   }
 
-  function deleteTimer(data) {
-    return fetch('/api/timers', {
+  function deleteDream(data) {
+    return fetch('/api/dreams', {
       method: 'delete',
       body: JSON.stringify(data),
       headers: {
@@ -44,27 +44,27 @@ window.client = (function () {
     }).then(checkStatus);
   }
 
-  function startTimer(data) {
-    return fetch('/api/timers/start', {
-      method: 'post',
-      body: JSON.stringify(data),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(checkStatus);
-  }
+  // function startDream(data) {
+  //   return fetch('/api/dreams/start', {
+  //     method: 'post',
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then(checkStatus);
+  // }
 
-  function stopTimer(data) {
-    return fetch('/api/timers/stop', {
-      method: 'post',
-      body: JSON.stringify(data),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(checkStatus);
-  }
+  // function stopDream(data) {
+  //   return fetch('/api/dreams/stop', {
+  //     method: 'post',
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then(checkStatus);
+  // }
 
   function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -83,11 +83,11 @@ window.client = (function () {
   }
 
   return {
-    getTimers,
-    createTimer,
-    updateTimer,
-    startTimer,
-    stopTimer,
-    deleteTimer,
+    getDreams,
+    createDream,
+    updateDream,
+    // startDream,
+    // stopDream,
+    deleteDream,
   };
 }());
