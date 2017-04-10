@@ -44,27 +44,27 @@ window.client = (function () {
     }).then(checkStatus);
   }
 
-  // function startDream(data) {
-  //   return fetch('/api/dreams/start', {
-  //     method: 'post',
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   }).then(checkStatus);
-  // }
+  function upvoteDream(data) {
+    return fetch('/api/dreams/upvote', {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(checkStatus);
+  }
 
-  // function stopDream(data) {
-  //   return fetch('/api/dreams/stop', {
-  //     method: 'post',
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   }).then(checkStatus);
-  // }
+  function downvoteDream(data) {
+    return fetch('/api/dreams/downvote', {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(checkStatus);
+  }
 
   function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -86,8 +86,8 @@ window.client = (function () {
     getDreams,
     createDream,
     updateDream,
-    // startDream,
-    // stopDream,
+    upvoteDream,
+    downvoteDream,
     deleteDream,
   };
 }());

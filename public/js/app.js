@@ -36,6 +36,7 @@ createDream: function(dream){
     this.setState({
         dreams: this.state.dreams.concat(d),
     });
+    client.createDream(d);
 },
 updateDream: function(attrs){
     this.setState({
@@ -54,11 +55,15 @@ updateDream: function(attrs){
             }
         }),
     });
+    client.updateDream(attrs);
 },
 deleteDream: function (dreamId) {
     this.setState({
         dreams: this.state.dreams.filter(d => d.id !== dreamId),
     });
+    client.deleteDream(
+        { id: dreamId }
+    )
 },
 upvoteDream: function (dreamId) {
     console.log(dreamId);
@@ -75,6 +80,9 @@ upvoteDream: function (dreamId) {
     this.setState({
         dreams: nextDreams,
     });
+    client.upvoteDream(
+        { id: dreamId }
+    );
 },
 downvoteDream: function (dreamId) {
     console.log(dreamId);
@@ -91,6 +99,9 @@ downvoteDream: function (dreamId) {
     this.setState({
         dreams: nextDreams,
     });
+    client.downvoteDream(
+        { id: dreamId }
+    );
 },
 render: function () {
     return (

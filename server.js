@@ -62,6 +62,33 @@ app.post('/api/dreams', (req, res) => {
 //     });
 //   });
 // });
+app.post('/api/dreams/upvote', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const dreams = JSON.parse(data);
+    dreams.forEach((dream) => {
+      if (dream.id === req.body.id) {
+        dream.votes = dream.votes + 1;
+      }
+    });
+    fs.writeFile(DATA_FILE, JSON.stringify(dreams, null, 4), () => {
+      res.json({});
+    });
+  });
+});
+
+app.post('/api/dreams/downvote', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const dreams = JSON.parse(data);
+    dreams.forEach((dream) => {
+      if (dream.id === req.body.id) {
+        dream.votes = dream.votes - 1;
+      }
+    });
+    fs.writeFile(DATA_FILE, JSON.stringify(dreams, null, 4), () => {
+      res.json({});
+    });
+  });
+});
 
 // app.post('/api/timers/stop', (req, res) => {
 //   fs.readFile(DATA_FILE, (err, data) => {
