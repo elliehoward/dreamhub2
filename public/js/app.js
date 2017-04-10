@@ -9,14 +9,18 @@ const DreamsDashboard = React.createClass({
                     date: '2/25/17',
                     private: false,
                     editFormOpen: false,
-                    dreamImg: 'http://i.ytimg.com/vi/lt0WQ8JzLz4/maxresdefault.jpg'
+                    dreamImg: 'http://i.ytimg.com/vi/lt0WQ8JzLz4/maxresdefault.jpg',
+                    votes: 4,
+                    id: uuid.v4()
                 }, {
                     title: 'Spiders were everywhere',
                     description: 'I dreamed that my sister and I were trapped in my old house and it was filled with spiders. They would come in waves. We had to escape while the spiders were gone, and hide under tissues in my closet if the spiders came out. They would crawl over everything. I remember looking for my sister when the spiders left but I could not find her. I woke up before making it outdoors.',
                     date: '1/12/17',
                     private: false,
                     editFormOpen: false,
-                    dreamImg: 'http://s-media-cache-ak0.pinimg.com/originals/76/61/c7/7661c751a1c735e42c6943b644c847f4.jpg'
+                    dreamImg: 'http://s-media-cache-ak0.pinimg.com/originals/76/61/c7/7661c751a1c735e42c6943b644c847f4.jpg',
+                    votes: 10,
+                    id: uuid.v4()
                 }
             ]
         }
@@ -26,6 +30,14 @@ const DreamsDashboard = React.createClass({
     },
     handleTrashClick: function (dreamId) {
         this.deleteDream(dreamId)
+    },
+    handleUpvote: function (dreamId) {
+        // console.log(dreamId, 'was upvoted')
+        this.upvoteDream(dreamId)
+    },
+    handleDownvote: function (dreamId) {
+        this.downvoteDream(dreamId)
+        // console.log(dreamId, 'was downvoted')
     },
     handleCreateFormSubmit: function(dream){
         this.createDream(dream);
@@ -43,9 +55,10 @@ const DreamsDashboard = React.createClass({
                     return Object.assign({}, dream, {
                         title: attrs.title,
                         description: attrs.description,
-                        id: uuid.v4(),
+                        id: attrs.id,
                         dreamImg: attrs.dreamImg,
                         date: attrs.date,
+                        votes: attrs.votes,
                     });
                 } else {
                     return dream;
@@ -58,6 +71,38 @@ const DreamsDashboard = React.createClass({
             dreams: this.state.dreams.filter(d => d.id !== dreamId),
         });
     },
+    upvoteDream: function (dreamId) {
+        console.log(dreamId);
+        const nextDreams = this.state.dreams.map((dream) => {
+            if (dream.id === dreamId) {
+                console.log(dream.votes);
+                return Object.assign({}, dream, {
+                    votes: dream.votes + 1,
+                });
+            } else {
+                return dream;
+            }
+        });
+        this.setState({
+            dreams: nextDreams,
+        });
+    },
+    downvoteDream: function (dreamId) {
+        console.log(dreamId);
+        const nextDreams = this.state.dreams.map((dream) => {
+            if (dream.id === dreamId) {
+                console.log(dream.votes);
+                return Object.assign({}, dream, {
+                    votes: dream.votes - 1,
+                });
+            } else {
+                return dream;
+            }
+        });
+        this.setState({
+            dreams: nextDreams,
+        });
+    },
     render: function () {
         return (
             <div className='ui three column centered grid'>
@@ -66,6 +111,8 @@ const DreamsDashboard = React.createClass({
                         dreams={this.state.dreams}
                         onFormSubmit={this.handleEditFormSubmit}
                         onTrashClick={this.handleTrashClick}
+                        onUpvote={this.handleUpvote}
+                        onDownvote={this.handleDownvote}
                     />
                     <ToggleableDreamForm
                         onFormSubmit={this.handleCreateFormSubmit}
@@ -87,8 +134,11 @@ const EditableDreamList = React.createClass({
                 date={dream.date}
                 private={dream.private}
                 dreamImg={dream.dreamImg}
+                votes={dream.votes}
                 onFormSubmit={this.props.onFormSubmit}
                 onTrashClick={this.props.onTrashClick}
+                onUpvote={this.props.onUpvote}
+                onDownvote={this.props.onDownvote}
             />
         ))
         return (
@@ -143,153 +193,175 @@ const EditableDreamList = React.createClass({
                         date={this.props.date}
                         private={this.props.private}
                         dreamImg={this.props.dreamImg}
+                        votes={this.props.votes}
                         onEditClick={this.handleEditClick}
                         onTrashClick={this.props.onTrashClick}
+                        onUpvote={this.props.onUpvote}
+                        onDownvote={this.props.onDownvote}
                     />
                 );
             }
         }
     });
 
-const DreamForm = React.createClass({
-    handleSubmit: function(){
-        this.props.onFormSubmit({
-            id: this.props.id,
-            title: this.refs.title.value,
-            description: this.refs.description.value,
-            dreamImg: this.refs.dreamImg.value,
-            date: this.refs.date.value
-        })
-    },
-    render: function () {
-        const submitText = this.props.id ? 'Update' : 'Create';
-        return (
-            <div className='ui centered card'>
-                <div className='content'>
-                    <div className='ui form'>
-                        <div className='field'>
-                            <label>Title *</label>
-                            <input type='text' ref='title'
-                                defaultValue={this.props.title} />
-                            </div>
+    const DreamForm = React.createClass({
+        handleSubmit: function(){
+            this.props.onFormSubmit({
+                id: this.props.id,
+                title: this.refs.title.value,
+                description: this.refs.description.value,
+                dreamImg: this.refs.dreamImg.value,
+                date: this.refs.date.value,
+                votes: this.props.votes
+            })
+        },
+        render: function () {
+            const submitText = (this.props.id ? 'Update' : 'Create');
+            return (
+                <div className='ui centered card'>
+                    <div className='content'>
+                        <div className='ui form'>
                             <div className='field'>
-                                <label>Description *</label>
-                                <input type='text' ref='description'
-                                    defaultValue={this.props.description} />
+                                <label>Title *</label>
+                                <input type='text' ref='title'
+                                    defaultValue={this.props.title} />
                                 </div>
                                 <div className='field'>
-                                    <label>Image URL</label>
-                                    <input type='text' ref='dreamImg'
-                                        defaultValue={this.props.dreamImg} />
+                                    <label>Description *</label>
+                                    <input type='text' ref='description'
+                                        defaultValue={this.props.description} />
                                     </div>
                                     <div className='field'>
-                                        <label>Date</label>
-                                        <input type='text' ref='date'
-                                            defaultValue={this.props.date} />
+                                        <label>Image URL</label>
+                                        <input type='text' ref='dreamImg'
+                                            defaultValue={this.props.dreamImg} />
                                         </div>
-                                        <div className='ui two bottom attached buttons'>
-                                            <button className='ui inverted blue button'
-                                                onClick={this.handleSubmit}
-                                                >
-                                                    {submitText}
-                                                </button>
-                                                <button className='ui inverted red button'
-                                                    onClick={this.props.onFormClose}
+                                        <div className='field'>
+                                            <label>Date</label>
+                                            <input type='text' ref='date'
+                                                defaultValue={this.props.date} />
+                                            </div>
+                                            <div className='ui two bottom attached buttons'>
+                                                <button className='ui inverted blue button'
+                                                    onClick={this.handleSubmit}
                                                     >
-                                                        Cancel
+                                                        {submitText}
                                                     </button>
+                                                    <button className='ui inverted red button'
+                                                        onClick={this.props.onFormClose}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            }
-                        });
+                                    );
+                                }
+                            });
 
-const ToggleableDreamForm = React.createClass({
-    getInitialState: function(){
-        return {
-            isOpen: false,
-        };
-    },
-    handleFormOpen: function(){
-        this.setState({ isOpen: true });
-    },
-    handleFormClose: function(){
-        this.setState({ isOpen: false });
-    },
-    handleFormSubmit: function(dream){
-        this.props.onFormSubmit(dream);
-        this.setState({ isOpen: false });
-    },
-    render: function () {
-        if (this.state.isOpen) {
-            return (
-                <DreamForm
-                    onFormSubmit={this.handleFormSubmit}
-                    onFormClose={this.handleFormClose}
+                            const ToggleableDreamForm = React.createClass({
+                                getInitialState: function(){
+                                    return {
+                                        isOpen: false,
+                                    };
+                                },
+                                handleFormOpen: function(){
+                                    this.setState({ isOpen: true });
+                                },
+                                handleFormClose: function(){
+                                    this.setState({ isOpen: false });
+                                },
+                                handleFormSubmit: function(dream){
+                                    this.props.onFormSubmit(dream);
+                                    this.setState({ isOpen: false });
+                                },
+                                render: function () {
+                                    if (this.state.isOpen) {
+                                        return (
+                                            <DreamForm
+                                                onFormSubmit={this.handleFormSubmit}
+                                                onFormClose={this.handleFormClose}
 
-                />
-            );
-        } else {
-            return (
-                <div className='ui basic content center aligned segment'>
-                    <button
-                        className='ui basic button icon'
-                        onClick={this.handleFormOpen}
-                        >
-                            <i className='plus icon'></i> </button>
-                        </div>
-                    ); }
-                }
-            })
+                                            />
+                                        );
+                                    } else {
+                                        return (
+                                            <div className='ui basic content center aligned segment'>
+                                                <button
+                                                    className='ui basic button icon'
+                                                    onClick={this.handleFormOpen}
+                                                    >
+                                                        <i className='plus icon'></i> </button>
+                                                    </div>
+                                                ); }
+                                            }
+                                        })
 
-const Dream = React.createClass({
-    handleTrashClick: function () {
-      this.props.onTrashClick(this.props.id);
-  },
-    render: function () {
-        return (
-            <div className='ui centered card'>
-                <div className='content'>
-                    <span
-                        className='right floated edit icon'
-                        onClick={this.props.onEditClick}
-                        >
-                            <i className='edit icon'></i> </span>
-                            <span
-                                className='right floated trash icon'
-                                onClick={this.handleTrashClick}
-                                >
-                                 <i className='trash icon'></i>
-                        </span>
-                        <br/>
-                        <img className="right floated small ui image" src={this.props.dreamImg}/>
-                        <div className="header">
-                            {this.props.title}
-                        </div>
-                        <div className="meta">
-                            {this.props.date}
-                        </div>
-                        <div className="description">
-                            {this.props.description}
-                        </div>
-                    </div>
-                    <div className="extra content">
-                        <div className="ui two buttons">
-                            <div className="ui icon green inverted button"><i className="cloud upload icon"></i>  Float</div>
-                            <div className="ui icon red inverted button"><i className="cloud download icon"></i>  Descend</div>
-                        </div>
-                    </div>
-                </div>
-            );
-        },
-    });
+                                        const Dream = React.createClass({
+                                            handleTrashClick: function () {
+                                                this.props.onTrashClick(this.props.id);
+                                            },
+                                            handleUpvote: function () {
+                                                this.props.onUpvote(this.props.id)
+                                            },
+                                            handleDownvote: function () {
+                                                this.props.onDownvote(this.props.id)
+                                            },
+                                            render: function () {
+                                                return (
+                                                    <div className='ui centered card'>
+                                                        <div className='content'>
+                                                            <span
+                                                                className='right floated edit icon'
+                                                                onClick={this.props.onEditClick}
+                                                                >
+                                                                    <i className='edit icon'></i> </span>
+                                                                    <span
+                                                                        className='right floated trash icon'
+                                                                        onClick={this.handleTrashClick}
+                                                                        >
+                                                                            <i className='trash icon'></i>
+                                                                        </span>
+                                                                        <br/>
+                                                                        <img className="right floated small ui image" src={this.props.dreamImg}/>
+                                                                        <div className="header">
+                                                                            {this.props.title}
+                                                                        </div>
+                                                                        <div className="meta">
+                                                                            {this.props.date}
+                                                                        </div>
+                                                                        <div className="description">
+                                                                            {this.props.description}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="extra content">
+                                                                        <div className="ui two buttons">
+                                                                            <div
+                                                                                className="ui icon green inverted button"
+                                                                                onClick={this.handleUpvote}
+                                                                                >
+                                                                                    <i className="cloud upload icon"></i>
+                                                                                    Float
+                                                                                </div>
+                                                                                <div
+                                                                                    className="ui icon red inverted button"
+                                                                                    onClick={this.handleDownvote}
+                                                                                    >
+                                                                                        <i className="cloud download icon"></i>
+                                                                                        Descend
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            });
 
 
 
-ReactDOM.render(
-    <DreamsDashboard>
-    </DreamsDashboard>,
-    document.getElementById('content')
-);
+                                                            ReactDOM.render(
+                                                                <DreamsDashboard>
+                                                                </DreamsDashboard>,
+                                                                document.getElementById('content')
+                                                            );

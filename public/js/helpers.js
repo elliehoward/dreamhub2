@@ -6,6 +6,7 @@ window.helpers = (function () {
       id: uuid.v4(), // eslint-disable-line no-undef
       dreamImg: attrs.dreamImg || '',
       date: attrs.date,
+      votes: attrs.votes
     };
 
     return dream;
