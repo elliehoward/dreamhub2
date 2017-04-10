@@ -23,7 +23,7 @@ const DreamsDashboard = React.createClass({
                     id: uuid.v4()
                 }
             ]
-        }
+        };
     },
     handleEditFormSubmit: function (attrs) {
         this.updateDream(attrs);
@@ -125,7 +125,10 @@ const DreamsDashboard = React.createClass({
 
 const EditableDreamList = React.createClass({
     render: function () {
-        const dreams = this.props.dreams.map((dream) => (
+        const dreamData = this.props.dreams.sort((a, b) => (
+                b.votes - a.votes
+            ))
+        const dreams = dreamData.map((dream) => (
             <EditableDream
                 title={dream.title}
                 id={dream.id}
