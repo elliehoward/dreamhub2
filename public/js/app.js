@@ -21,12 +21,10 @@ handleTrashClick: function (dreamId) {
     this.deleteDream(dreamId)
 },
 handleUpvote: function (dreamId) {
-    // console.log(dreamId, 'was upvoted')
     this.upvoteDream(dreamId)
 },
 handleDownvote: function (dreamId) {
     this.downvoteDream(dreamId)
-    // console.log(dreamId, 'was downvoted')
 },
 handleCreateFormSubmit: function(dream){
     this.createDream(dream);
@@ -66,10 +64,8 @@ deleteDream: function (dreamId) {
     )
 },
 upvoteDream: function (dreamId) {
-    console.log(dreamId);
     const nextDreams = this.state.dreams.map((dream) => {
         if (dream.id === dreamId) {
-            console.log(dream.votes);
             return Object.assign({}, dream, {
                 votes: dream.votes + 1,
             });
@@ -85,10 +81,8 @@ upvoteDream: function (dreamId) {
     );
 },
 downvoteDream: function (dreamId) {
-    console.log(dreamId);
     const nextDreams = this.state.dreams.map((dream) => {
         if (dream.id === dreamId) {
-            console.log(dream.votes);
             return Object.assign({}, dream, {
                 votes: dream.votes - 1,
             });
