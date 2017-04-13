@@ -66,6 +66,10 @@ deleteDream: function (dreamId) {
 upvoteDream: function (dreamId) {
     const nextDreams = this.state.dreams.map((dream) => {
         if (dream.id === dreamId) {
+            client.upvoteDream({
+                    id: dreamId,
+                    votes: dream.votes
+                });
             return Object.assign({}, dream, {
                 votes: dream.votes + 1,
             });
@@ -76,9 +80,6 @@ upvoteDream: function (dreamId) {
     this.setState({
         dreams: nextDreams,
     });
-    client.upvoteDream(
-        { id: dreamId }
-    );
 },
 downvoteDream: function (dreamId) {
     const nextDreams = this.state.dreams.map((dream) => {
@@ -130,7 +131,7 @@ const EditableDreamList = React.createClass({
                 description={dream.description}
                 date={dream.date}
                 private={dream.private}
-                dreamImg={dream.dreamImg}
+                dreamImg={dream.dream_image_url}
                 votes={dream.votes}
                 onFormSubmit={this.props.onFormSubmit}
                 onTrashClick={this.props.onTrashClick}
