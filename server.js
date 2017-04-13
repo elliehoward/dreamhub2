@@ -41,6 +41,7 @@ app.post('/api/dreams', (req, res) => {
       private: req.body.private,
       editFormOpen: req.body.editFormOpen
     };
+    console.log(newDream)
     dreams.push(newDream);
     fs.writeFile(DATA_FILE, JSON.stringify(dreams, null, 4), () => {
       res.setHeader('Cache-Control', 'no-cache');
@@ -90,22 +91,6 @@ app.post('/api/dreams/downvote', (req, res) => {
   });
 });
 
-// app.post('/api/timers/stop', (req, res) => {
-//   fs.readFile(DATA_FILE, (err, data) => {
-//     const timers = JSON.parse(data);
-//     timers.forEach((timer) => {
-//       if (timer.id === req.body.id) {
-//         const delta = req.body.stop - timer.runningSince;
-//         timer.elapsed += delta;
-//         timer.runningSince = null;
-//       }
-//     });
-//     fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
-//       res.json({});
-//     });
-//   });
-// });
-
 app.put('/api/dreams', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
     const dreams = JSON.parse(data);
@@ -117,8 +102,8 @@ app.put('/api/dreams', (req, res) => {
           dream.votes = req.body.votes
           dream.date = req.body.date
           dream.dreamImg = req.body.dreamImg
-          dream.private = req.body.private
-          dream.editFormOpen = req.body.editFormOpen
+          dream.private = false
+          dream.editFormOpen = false
       }
     });
     fs.writeFile(DATA_FILE, JSON.stringify(dreams, null, 4), () => {

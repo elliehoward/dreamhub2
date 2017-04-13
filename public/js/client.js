@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 window.client = (function () {
   function getDreams(success) {
-    return fetch('/api/dreams', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams', {
       headers: {
         Accept: 'application/json',
       },
@@ -12,7 +12,7 @@ window.client = (function () {
   }
 
   function createDream(data) {
-    return fetch('/api/dreams', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams', {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
@@ -23,7 +23,7 @@ window.client = (function () {
   }
 
   function updateDream(data) {
-    return fetch('/api/dreams', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams', {
       method: 'put',
       body: JSON.stringify(data),
       headers: {
@@ -34,7 +34,7 @@ window.client = (function () {
   }
 
   function deleteDream(data) {
-    return fetch('/api/dreams', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams', {
       method: 'delete',
       body: JSON.stringify(data),
       headers: {
@@ -45,7 +45,7 @@ window.client = (function () {
   }
 
   function upvoteDream(data) {
-    return fetch('/api/dreams/upvote', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams/upvote', {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
@@ -56,7 +56,7 @@ window.client = (function () {
   }
 
   function downvoteDream(data) {
-    return fetch('/api/dreams/downvote', {
+    return fetch('http://dreamhubapi.herokuapp.com/api/dreams/downvote', {
       method: 'post',
       body: JSON.stringify(data),
       headers: {
