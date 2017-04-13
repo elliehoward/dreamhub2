@@ -1,10 +1,10 @@
 window.helpers = (function () {
   function newDream(attrs = {}) {
     const dream = {
-      title: attrs.title || 'Timer',
+      title: attrs.title || 'Dream title',
       description: attrs.description || 'Description',
       id: uuid.v4(), // eslint-disable-line no-undef
-      dreamImg: attrs.dreamImg || '',
+      dream_image_url: attrs.dreamImg || '',
       date: attrs.date,
       votes: attrs.votes
     };
