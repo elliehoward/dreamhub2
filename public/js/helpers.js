@@ -4,7 +4,7 @@ window.helpers = (function () {
       title: attrs.title || 'Dream title',
       description: attrs.description || 'Description',
       id: uuid.v4(), // eslint-disable-line no-undef
-      dream_image_url: attrs.dreamImg || '',
+      dream_image_url: attrs.dreamImg || attrs.dream_image_url,
       date: attrs.date,
       votes: attrs.votes
     };
