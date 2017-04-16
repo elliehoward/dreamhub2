@@ -226,8 +226,8 @@ const EditableDreamList = React.createClass({
                                 </div>
                                 <div className='field'>
                                     <label>Description *</label>
-                                    <input type='text' ref='description'
-                                        defaultValue={this.props.description} />
+                                    <textarea type='text' ref='description'
+                                        defaultValue={this.props.description} ></textarea>
                                     </div>
                                     <div className='field'>
                                         <label>Image URL</label>
