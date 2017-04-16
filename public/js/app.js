@@ -236,7 +236,7 @@ const EditableDreamList = React.createClass({
                                         </div>
                                         <div className='field'>
                                             <label>Date</label>
-                                            <input type='text' ref='date'
+                                            <input type='date' ref='date'
                                                 defaultValue={this.props.date} />
                                             </div>
                                             <div className='ui two bottom attached buttons'>
