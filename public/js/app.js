@@ -285,10 +285,11 @@ const EditableDreamList = React.createClass({
                                         );
                                     } else {
                                         return (
-                                            <div className='ui basic content center aligned segment'>
+                                            <div data-inverted="" data-tooltip="Add a new dream" className='ui basic content center aligned segment'>
                                                 <button
                                                     className='ui basic button icon'
                                                     onClick={this.handleFormOpen}
+
                                                     >
                                                         <i className='plus icon'></i> </button>
                                                     </div>
@@ -339,6 +340,7 @@ const EditableDreamList = React.createClass({
                                                                             <div
                                                                                 className="ui icon green inverted button"
                                                                                 onClick={this.handleUpvote}
+                                                                                data-inverted="" data-tooltip="Upvote this dream"
                                                                                 >
                                                                                     <i className="cloud upload icon"></i>
                                                                                     <br/>
@@ -347,6 +349,7 @@ const EditableDreamList = React.createClass({
                                                                                 <div
                                                                                     className="ui icon red inverted button"
                                                                                     onClick={this.handleDownvote}
+                                                                                    data-inverted="" data-tooltip="Downvote this dream"
                                                                                     >
                                                                                         <i className="cloud download icon"></i>
                                                                                         <br/>
