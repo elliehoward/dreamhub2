@@ -4,6 +4,7 @@
 
 #content {
   margin-top: 3em;
+  min-width: 100%;
 }
 
 .dreamhub {
@@ -15,4 +16,9 @@
     padding-top: 20px;
     color: white;
     text-align: center;
+}
+
+.dream {
+    min-width: 250px;
+
 }

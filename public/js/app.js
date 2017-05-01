@@ -216,7 +216,7 @@ const EditableDreamList = React.createClass({
         render: function () {
             const submitText = (this.props.id ? 'Update' : 'Create');
             return (
-                <div className='ui centered card'>
+                <div className='ui centered card dream'>
                     <div className='content'>
                         <div className='ui form'>
                             <div className='field'>
@@ -308,7 +308,7 @@ const EditableDreamList = React.createClass({
                                             },
                                             render: function () {
                                                 return (
-                                                    <div className='ui centered card'>
+                                                    <div className='ui centered card dream'>
                                                         <div className='content'>
                                                             <div className="ui purple ribbon label">
                                                                 {this.props.title}
@@ -341,6 +341,7 @@ const EditableDreamList = React.createClass({
                                                                                 onClick={this.handleUpvote}
                                                                                 >
                                                                                     <i className="cloud upload icon"></i>
+                                                                                    <br/>
                                                                                     Float
                                                                                 </div>
                                                                                 <div
@@ -348,6 +349,7 @@ const EditableDreamList = React.createClass({
                                                                                     onClick={this.handleDownvote}
                                                                                     >
                                                                                         <i className="cloud download icon"></i>
+                                                                                        <br/>
                                                                                         Descend
                                                                                     </div>
                                                                                 </div>
