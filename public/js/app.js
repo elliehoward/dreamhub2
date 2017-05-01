@@ -310,6 +310,9 @@ const EditableDreamList = React.createClass({
                                                 return (
                                                     <div className='ui centered card'>
                                                         <div className='content'>
+                                                            <div className="ui purple ribbon label">
+                                                                {this.props.title}
+                                                            </div>
                                                             <span
                                                                 className='right floated edit icon'
                                                                 onClick={this.props.onEditClick}
@@ -322,10 +325,8 @@ const EditableDreamList = React.createClass({
                                                                             <i className='trash icon'></i>
                                                                         </span>
                                                                         <br/>
+                                                                        <br/>
                                                                         <img className="right floated small ui image" src={this.props.dreamImg}/>
-                                                                        <div className="header">
-                                                                            {this.props.title}
-                                                                        </div>
                                                                         <div className="meta">
                                                                             {this.props.date}
                                                                         </div>
