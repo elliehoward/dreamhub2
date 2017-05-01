@@ -13,8 +13,14 @@ npm install
 3. Boot the HTTP server
 
 ````
-npm run server
+npm start
 ````
 
 The server is now running at [localhost:3000](localhost:3000)
-# dreamhub2
+# Dream Hub
+
+Dream hub is a site for people to share their dreams and thoughts on them anonymously.
+You can vote on dreams to decide what order they appear in.
+Try adding a dream!
+Check out the live site at dreamhub.herokuapp.com
+and feel free to check out my API for this at github.com/elliehoward/dreamapi
