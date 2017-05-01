@@ -1,7 +1,18 @@
-#main {
+/*#main {
   margin-top: 6em;
-}
+}*/
 
 #content {
   margin-top: 3em;
+}
+
+.dreamhub {
+    background-color: black;
+    padding-bottom: 35px;
+}
+
+.header-text {
+    padding-top: 20px;
+    color: white;
+    text-align: center;
 }
