@@ -102,6 +102,9 @@ render: function () {
     return (
         <div className='ui three column centered grid'>
             <div className='column'>
+                <ToggleableDreamForm
+                    onFormSubmit={this.handleCreateFormSubmit}
+                />
                 <EditableDreamList
                     dreams={this.state.dreams}
                     onFormSubmit={this.handleEditFormSubmit}
